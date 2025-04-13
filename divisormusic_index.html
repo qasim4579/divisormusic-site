@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DivisorMusic - Your Personal Music Space</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: white;
+    }
+    header {
+      padding: 20px;
+      background: #1f1f1f;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .song-item {
+      background: #1c1c1c;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px #000;
+    }
+    .song-item img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .song-info {
+      margin-top: 10px;
+    }
+    .song-title {
+      font-size: 20px;
+      color: #00ffff;
+    }
+    .song-details {
+      font-size: 14px;
+      color: #bbbbbb;
+    }
+    .controls {
+      display: none;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .controls button {
+      background: #333;
+      color: #00ffcc;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .comment-box {
+      margin-top: 15px;
+    }
+    .comment-box textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <header>🎵 DivisorMusic - Powered by Divisor Studios</header>
+  <div class="song-list" id="songList">
+    <!-- Future songs will be dynamically listed here -->
+    <p style="text-align: center; font-size: 18px; color: gray;">No songs uploaded yet.</p>
+  </div>
+
+  <script>
+    const songList = document.getElementById("songList");
+
+    // Future song loader (this is where songs will be injected dynamically)
+
+    function loadSong(song) {
+      const container = document.createElement("div");
+      container.className = "song-item";
+
+      const img = document.createElement("img");
+      img.src = song.thumbnail;
+
+      const info = document.createElement("div");
+      info.className = "song-info";
+
+      const title = document.createElement("div");
+      title.className = "song-title";
+      title.textContent = song.title;
+
+      const details = document.createElement("div");
+      details.className = "song-details";
+      details.textContent = `Lyrics & Music: ${song.artist}`;
+
+      const audio = document.createElement("audio");
+      audio.src = song.audio;
+      audio.controls = true;
+      audio.style.width = "100%";
+
+      const controls = document.createElement("div");
+      controls.className = "controls";
+      const playBtn = document.createElement("button");
+      playBtn.textContent = "⏯️ Play";
+      const pauseBtn = document.createElement("button");
+      pauseBtn.textContent = "⏸ Pause";
+
+      playBtn.onclick = () => audio.play();
+      pauseBtn.onclick = () => audio.pause();
+      controls.appendChild(playBtn);
+      controls.appendChild(pauseBtn);
+
+      audio.onplay = () => controls.style.display = "block";
+
+      const commentBox = document.createElement("div");
+      commentBox.className = "comment-box";
+      commentBox.innerHTML = "<textarea rows='3' placeholder='Leave a comment...'></textarea>";
+
+      info.appendChild(title);
+      info.appendChild(details);
+      container.appendChild(img);
+      container.appendChild(info);
+      container.appendChild(audio);
+      container.appendChild(controls);
+      container.appendChild(commentBox);
+
+      songList.innerHTML = "";
+      songList.appendChild(container);
+    }
+
+    // Load demo song (optional - you can remove this once songs are added)
+    // loadSong({ title: "Bewafa", artist: "M Qasim Siddiqui", audio: "song.mp3", thumbnail: "thumbnail.png" });
+  </script>
+</body>
+</html>
